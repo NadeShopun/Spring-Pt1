@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:MusicPlayer.properties"/>
+
+    <bean id="RapMusicBean"
+          class="space.mairi.springcourse.RapMusic">
+<!--          scope="prototype">-->
+    </bean>
+    <bean id="HipHopMusicBean"
+          class="space.mairi.springcourse.HipHopMusic">
+
+    </bean>
+    <bean id="ClassicalMusicBean"
+          class="space.mairi.springcourse.ClassicalMusic"
+          init-method="doMyInit"
+          destroy-method="doMyDestroy"
+          factory-method="getClassicalMusic">
+    </bean>
+    <bean id="RockMusicBean"
+          class="space.mairi.springcourse.RockMusic">
+
+    </bean>
+
+    <bean id="musicPlayer"
+          class="space.mairi.springcourse.MusicPlayer"
+          scope="prototype">
+        <property name="musicList">
+            <list>
+                <ref bean="RapMusicBean"/>
+                <ref bean="HipHopMusicBean"/>
+                <ref bean="ClassicalMusicBean"/>
+                <ref bean="RockMusicBean"/>
+            </list>
+        </property>
+
+        <property name="name" value="${musicPlayer.name}"/>
+        <property name="volume" value="${musicPlayer.volume}"/>
+    </bean>
+
+</beans>
